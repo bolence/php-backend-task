@@ -16,12 +16,12 @@ class User {
 	{
 		$this->db = DB::getInstance();
 
-		$this->sessionName = 'user_loggedin';
+		$this->sessionName = Config::get('session/session_name');
 
 		// check if user already logged in
 		if( !is_null($user)) {
 
-			if( $this->isLoginIn($this->sessionName) && $this->findUser($user) ) {
+			if( $this->isLoginIn($this->sessionName) ) {
 				$this->isLoggedIn = TRUE;
 			} else {
 
@@ -51,7 +51,7 @@ class User {
 
             if($data->count()){
                 $this->data = $data->first();
-                return true;
+                return $this->data;
             }
         }
 
@@ -90,9 +90,13 @@ class User {
 
 		$user = $this->findUser( $email );
 
+
+
 		if( $user ) {
 
-			if( $user->data()->password == HASH::make($password) && $this->data()->email == $email) {
+			if( $this->data()->password == HASH::make($password) && $this->data()->email == $email) {
+
+				Session::put($this->sessionName, $this->data()->id);
 
 				return TRUE;
 

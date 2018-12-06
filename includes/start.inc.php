@@ -12,7 +12,11 @@ $GLOBALS['config'] = array(
         'username'      => 'root',
         'password'      => 'root',
         'db'            => 'quantox'
-    )
+    ),
+
+    'session' => array(
+    'session_name' => 'user'
+  )
 );
 
 /**

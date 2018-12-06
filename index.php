@@ -71,9 +71,10 @@ if(Session::exists('home'))
           <?php 
 
           $user = new User();
-          echo var_dump($user->isLoginIn());
+
+          
 		 if($user->isLoginIn()) {
-		 	echo '<p>Hello ' . Sanitize::escape($user->data()->username) . '</p>';
+		 	echo '<p class="text-success">Logged in</p>';
 		 }else {
 				echo ' <p>Welcome to php backend test. Here you can search registered users. You are just one step from there.</p>';
 			}
