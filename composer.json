@@ -7,5 +7,7 @@
             "email": "bosko.boskovic@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "twitter/bootstrap": "^4.1"
+    }
 }
