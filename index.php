@@ -1,9 +1,12 @@
 <?php 
 include_once('config.php');
 include_once('includes/start.inc.php'); 
-$user = new User();
 
-echo var_dump($user->isLoginIn());
+
+if(Session::exists('home'))
+{
+    echo '<p>' . Session::flash('home') . '</p>';
+}
 
 ?>
 <!DOCTYPE html>
@@ -63,9 +66,20 @@ echo var_dump($user->isLoginIn());
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <div class="container">
+        
           <h1 class="display-3">Hello, guys!</h1>
-          <p>Welcome to php backend test. Here you can search registered users. You are just one step from there.</p>
-          <p><a class="btn btn-success btn-sm" href="#" role="button">Login with you account &raquo;</a> <a class="btn btn-primary btn-sm" href="#" role="button">Create new account &raquo;</a></p>
+          <?php 
+
+          $user = new User();
+          echo var_dump($user->isLoginIn());
+		 if($user->isLoginIn()) {
+		 	echo '<p>Hello ' . Sanitize::escape($user->data()->username) . '</p>';
+		 }else {
+				echo ' <p>Welcome to php backend test. Here you can search registered users. You are just one step from there.</p>';
+			}
+
+
+			?>   
           
         </div>
       </div>

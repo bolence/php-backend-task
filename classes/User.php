@@ -67,10 +67,10 @@ class User {
 	 */
 	public function createNewUser( $fields = array() )
 	{
-		 // check if the creation of user has a problem.
-        if($this->db->insert('users', $fields))
+
+	if($this->db->insert('users', $fields))
         {
-            if($this->db->error() === TRUE)
+            if( $this->db->error() === TRUE )
             {
                 throw new Exception('There was a problem creating an account');
             }
@@ -88,23 +88,16 @@ class User {
 	public function loginUser( $email, $password )
 	{
 
-		// if($this->isLoginIn()) {
-		// 	Redirect::to('index.php');
-		// }
-
 		$user = $this->findUser( $email );
-
 
 		if( $user ) {
 
-			if( $user->data()->password == HASH::make($password, $this->data->salt) && $this->data()->email == $email) {
+			if( $user->data()->password == HASH::make($password) && $this->data()->email == $email) {
 
 				return TRUE;
 
 			}
 
-
-		
 		return FALSE;
 
 	}

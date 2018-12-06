@@ -97,6 +97,7 @@ class DB {
         if(count($fields))
         {
             $keys = array_keys($fields);
+
             $values = null;
             $x = 1;
             
@@ -111,9 +112,13 @@ class DB {
                 
                 $x++;
             }
-            
-            
+
+
             $sql = "INSERT INTO {$table} (`" . implode('`,`', $keys) . "`) VALUES ({$values})";
+            
+
+            $this->query($sql, $fields);
+
             
             if($this->query($sql, $fields)->error())
             {

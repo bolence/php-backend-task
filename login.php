@@ -27,13 +27,13 @@ if($validation->passed())
  if($login) {
   Redirect::to('index.php');
  } else {
-  echo 'Login failed';
+  $errors[] = 'User doesn`t exist';
  }
 } else {
 
 foreach($validation->errors() as $error)
 {
-  $errors[] = $errors;
+  $errors[] = $error;
 }
 
 }
@@ -51,7 +51,7 @@ foreach($validation->errors() as $error)
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Log in - Quantox company</title>
     <!-- Bootstrap core CSS -->
-    <link href="../vendor/twitter/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="vendor/twitter/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
     <style>
     	body {
@@ -116,6 +116,8 @@ foreach($validation->errors() as $error)
 
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
+            <h2>Login with your account</h2>
+
                     <form method="POST">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
@@ -132,21 +134,45 @@ foreach($validation->errors() as $error)
                       
                     </form>
 
-    </div>
-          
 
+
+              </div>
+
+
+            <?php if (!empty($errors)): ?>
+    
+              <div class="col-md-12" style="padding:10px;">
+              
+                <div class="alert alert-danger">
+                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                 <ul>
+                 <?php foreach ($errors as $error) {
+
+                  echo '<li>'.$error.'</li>';
+
+
+
+                 } ?>
+               </ul>
+               </div> 
+
+              </div>
+
+              <?php endif; ?>
 
         </div>
 
 
       </div>
 
+ 
+
     </main>
 
 
 
     <!-- Bootstrap core JavaScript -->    
-    <script src="../vendor/twitter/bootstrap/dist/css/bootstrap.min.js"></script>
+    <script src="vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script>
 
   </body>
 
