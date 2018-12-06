@@ -1,0 +1,11 @@
+{
+    "name": "backend/task",
+    "description": "Backend task for Quantox company",
+    "authors": [
+        {
+            "name": "Bosko Boskovic",
+            "email": "bosko.boskovic@gmail.com"
+        }
+    ],
+    "require": {}
+}
