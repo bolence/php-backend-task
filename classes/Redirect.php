@@ -1,6 +1,6 @@
 <?php
 
-
+namespace Classes;
 
 
 class Redirect {
@@ -8,6 +8,7 @@ class Redirect {
 
 public static function to( $location = NULL ) 
 {
+	
 	if( !is_null( $location) && !is_numeric($location) ) {
 
 		return header('Location:' . $location);

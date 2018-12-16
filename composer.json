@@ -8,6 +8,18 @@
         }
     ],
     "require": {
-        "twitter/bootstrap": "^4.1"
+        "twitter/bootstrap": "^4.1",
+        "vlucas/phpdotenv": "^2.5",
+        "rakit/validation": "^1.0",
+        "altorouter/altorouter": "^1.2",
+        "klein/klein": "^2.1"
+    },
+
+
+     "autoload": {
+        "psr-4": {
+            "Classes\\":   "classes/",
+            "Contracts\\": "contracts/"
+        }
     }
 }

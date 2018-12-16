@@ -6,4 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Rakit\\Validation\\' => array($vendorDir . '/rakit/validation/src'),
+    'Klein\\' => array($vendorDir . '/klein/klein/src/Klein'),
+    'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
+    'Contracts\\' => array($baseDir . '/contracts'),
+    'Classes\\' => array($baseDir . '/classes'),
 );

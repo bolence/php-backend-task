@@ -3,7 +3,11 @@
 
 class Input{
 
-    
+    /**
+     * [exists description]
+     * @param  string $type [description]
+     * @return [type]       [description]
+     */
     public static function exists($type = 'post')
     {
         switch($type)
@@ -22,8 +26,13 @@ class Input{
         }
     }
 
-    
-    public static function get($item){
+    /**
+     * [get description]
+     * @param  [type] $item [description]
+     * @return [type]       [description]
+     */
+    public static function get($item)
+    {
         if(isset($_POST[$item]))
         {
             return $_POST[$item];
@@ -34,5 +43,6 @@ class Input{
         }
         return '';
     }
+
 }
-?>
+

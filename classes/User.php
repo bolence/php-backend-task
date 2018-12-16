@@ -1,150 +1,110 @@
 <?php
 
+namespace Classes;
+
+
+use Contracts\DBInterface as DBConnection;
+use Classes\Session;
+use Classes\Redirect;
 
 class User {
 
-	private $db
-	        ,$sessionName
-	        ,$data
-	        ,$isLoggedIn = FALSE;
+	private $db = null;
 
-	/**
-	 * Construct of User class
-	 * @param Integer $user
-	 */
-	public function __construct( $user = null )
+	private $sessionName = null;
+
+	private $isLoggedIn = false;
+
+	private $table = 'users';
+
+	public function __construct( DBConnection $db ) 
 	{
-		$this->db = DB::getInstance();
-
-		$this->sessionName = Config::get('session/session_name');
-
-		// check if user already logged in
-		if( !is_null($user)) {
-
-			if( $this->isLoginIn($this->sessionName) ) {
-				$this->isLoggedIn = TRUE;
-			} else {
-
-				$this->loginOut($this->sessionName);
-
-			}
-
-		} else {
-			$this->findUser( $user );
-		}
-	} 
-
-
-	/**
-	 * Find user in users table
-	 * @param  [int] $user
-	 * @return Boolean
-	 */
-	public function findUser( $user )
-	{
-
-		 if($user){
-
-            $field = (is_numeric($user)) ? 'id' : 'email';
-
-            $data = $this->db->get('users', array($field, '=', $user));
-
-            if($data->count()){
-                $this->data = $data->first();
-                return $this->data;
-            }
-        }
-
-        return false;
+		$this->db = $db;
 
 	}
 
 
 	/**
-	 * Create new user and save to db
-	 * @param  Array $fields 
-	 * @return [type]         [description]
+	 * Login user
+	 * @param  String $email    
+	 * @param  String $password 
+	 * @return Object
 	 */
-	public function createNewUser( $fields = array() )
-	{
-
-	if($this->db->insert('users', $fields))
-        {
-            if( $this->db->error() === TRUE )
-            {
-                throw new Exception('There was a problem creating an account');
-            }
-        }
-
-    }
-
-
-    /**
-     * Login user into application
-     * @param  [type] $email    [description]
-     * @param  [type] $password [description]
-     * @return [type]           [description]
-     */
 	public function loginUser( $email, $password )
 	{
 
-		$user = $this->findUser( $email );
+		$password = hashing( $password );
 
-
+		$user = $this->getCurrentUser( $email, $password );
 
 		if( $user ) {
 
-			if( $this->data()->password == HASH::make($password) && $this->data()->email == $email) {
+			$this->sessionName = 'logged_in';
+			Session::session_put($this->sessionName, $user->id);
+			$this->isLoggedIn = true;
 
-				Session::put($this->sessionName, $this->data()->id);
+		} else {
 
-				return TRUE;
+			return false;
 
-			}
+		}
 
-		return FALSE;
+		return Redirect::to('index.php');
+		
+	}
+
+	/**
+	 * Insert new user
+	 * @param  Array  $data 
+	 * @return Boolean
+	 */
+	public function registerUser( array $data )
+	{
+		
+		return $this->db->insert( $this->table, $data );
 
 	}
 
-}
+	/**
+	 * Get all users from table
+	 * @return Object
+	 */
+	public function getAllUsers()
+	{
+		$users = $this->db->select( $this->table );
 
-
+		return $users;
+	}
 
 	/**
-	 * [is_logged_in description]
-	 * @return boolean
+	 * Get current user from table
+	 * @param  Integer    $id 
+	 * @return Object
 	 */
-    public function isLoginIn() {
-     
+	public function getCurrentUser( $email, $password )
+	{
+		$user = $this->db->row( $this->table, $email, $password );
+		return $user;
+	}
 
-        if ( Session::exists($this->sessionName) ) {
-            return true;
-        }
+	/**
+	 * [logoutUser description]
+	 * @return [type] [description]
+	 */
+	public function logoutUser( )
+	{	
 
-        return false;
-    }
+		Session::session_delete($this->sessionName);
+		$this->sessionName = null;
+		$this->isLoggedIn = false;
+
+	}
 
 
-    /**
-     * [logged_out description]
-     * @return [type] [description]
-     */
-    public function loginOut($session_name)
-    {
-    	return Session::delete($session_name);
-
-    }
-
-     public function exists() 
-     {
-        return ( !empty($this->data) ) ? TRUE : FALSE;
-     }
-
-     public function data() 
-     {
-        return $this->data;
-     }
-
+	public function loggedUser()
+	{
+		return Session::session_get($this->sessionName);
+	}
 
 
 }

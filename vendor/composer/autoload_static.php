@@ -6,9 +6,59 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitbbddf0e2da9d9cc60fb4b67a949b2bad
 {
+    public static $prefixLengthsPsr4 = array (
+        'R' => 
+        array (
+            'Rakit\\Validation\\' => 17,
+        ),
+        'K' => 
+        array (
+            'Klein\\' => 6,
+        ),
+        'D' => 
+        array (
+            'Dotenv\\' => 7,
+        ),
+        'C' => 
+        array (
+            'Contracts\\' => 10,
+            'Classes\\' => 8,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Rakit\\Validation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rakit/validation/src',
+        ),
+        'Klein\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/klein/klein/src/Klein',
+        ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Contracts\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/contracts',
+        ),
+        'Classes\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/classes',
+        ),
+    );
+
+    public static $classMap = array (
+        'AltoRouter' => __DIR__ . '/..' . '/altorouter/altorouter/AltoRouter.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInitbbddf0e2da9d9cc60fb4b67a949b2bad::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitbbddf0e2da9d9cc60fb4b67a949b2bad::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitbbddf0e2da9d9cc60fb4b67a949b2bad::$classMap;
 
         }, null, ClassLoader::class);
     }

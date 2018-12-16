@@ -22,7 +22,7 @@ $validation = $validate->check($_POST, array(
        'required' => true,
        'matches'  => 'password'
    ),
-   'name'     => array(
+   'email'     => array(
        'required' => true
 
    )
@@ -43,7 +43,6 @@ if( $validation->passed() ) {
              ));
 
 
-  Session::flash('home','Hello '.Input::get('name').'. You have been registered and you can now log in');
   Redirect::to('index.php');
 
 
@@ -127,9 +126,7 @@ foreach($validation->errors() as $error)
       <div class="jumbotron">
         <div class="container">
           <h1 class="display-3">Hello, guys!</h1>
-          <p>Welcome to php backend test. Here you can search registered users. You are just one step from there.</p>
-          <p><a class="btn btn-success btn-sm" href="#" role="button">Login with you account &raquo;</a> <a class="btn btn-primary btn-sm" href="#" role="button">Create new account &raquo;</a></p>
-          
+              <p>Welcome to php backend test. Here you can search registered users. You are just one step from there.</p>
         </div>
       </div>
 
